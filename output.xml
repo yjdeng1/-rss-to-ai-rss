@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+  <channel>
+    <title>AI 摘要聚合订阅</title>
+    <link>https://example.com/output.xml</link>
+    <description>自动抓取 RSS 并由 AI 生成摘要。</description>
+    <atom:link href="https://example.com/output.xml" rel="self"/>
+    <docs>http://www.rssboard.org/rss-specification</docs>
+    <generator>python-feedgen</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 24 Feb 2026 02:02:54 +0000</lastBuildDate>
+    <item>
+      <title>start-vibe-coding-fast</title>
+      <link>https://chadnauseam.com/coding/tips/start-vibe-coding-fast</link>
+      <description>【AI 总结】
+*   文章标题和链接指向一个名为“start-vibe-coding-fast”的编程技巧主题。
+*   提供的正文内容为空，无法提取具体的技术要点或方法。
+*   核心信息仅为该主题的存在，但具体内容缺失。
+
+【原文内容】
+标题：start-vibe-coding-fast
+链接：https://chadnauseam.com/coding/tips/start-vibe-coding-fast
+正文为空。</description>
+      <guid isPermaLink="true">https://chadnauseam.com/coding/tips/start-vibe-coding-fast</guid>
+      <pubDate>Tue, 24 Feb 2026 02:02:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>i-built-an-app-to-talk-to-my-dad</title>
+      <link>https://chadnauseam.com/coding/random/i-built-an-app-to-talk-to-my-dad</link>
+      <description>【AI 总结】
+*   文章标题暗示了一个个人项目：作者开发了一款应用程序，旨在改善或促进与父亲的沟通。
+*   项目动机可能源于与父亲交流存在障碍、希望创造独特的联系纽带，或是为了解决特定的沟通需求。
+*   这是一个将技术（编程）应用于解决个人情感或家庭关系的实践案例，体现了技术的温情一面。
+*   由于正文内容缺失，应用程序的具体功能、实现方式及最终效果等核心细节无法得知。
+
+【原文内容】
+标题：i-built-an-app-to-talk-to-my-dad
+链接：https://chadnauseam.com/coding/random/i-built-an-app-to-talk-to-my-dad
+正文为空。</description>
+      <guid isPermaLink="true">https://chadnauseam.com/coding/random/i-built-an-app-to-talk-to-my-dad</guid>
+      <pubDate>Tue, 24 Feb 2026 02:02:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>what-I-learned-building-a-language-learning-app</title>
+      <link>https://chadnauseam.com/language/what-I-learned-building-a-language-learning-app</link>
+      <description>【AI 总结】
+- **无法提供文章核心要点**：由于提供的文章正文内容为空，无法获取原文信息进行总结。
+- **建议核实信息来源**：请确认文章链接是否正确，或文章内容是否已成功加载。
+- **可尝试直接访问链接**：如需了解文章内容，建议直接点击提供的链接查看原文。
+
+【原文内容】
+标题：what-I-learned-building-a-language-learning-app
+链接：https://chadnauseam.com/language/what-I-learned-building-a-language-learning-app
+正文为空。</description>
+      <guid isPermaLink="true">https://chadnauseam.com/language/what-I-learned-building-a-language-learning-app</guid>
+      <pubDate>Tue, 24 Feb 2026 02:02:00 +0000</pubDate>
+    </item>
+  </channel>
+</rss>
