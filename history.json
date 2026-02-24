@@ -1,7 +1,13 @@
 {
-  "updated_at": "2026-02-24T02:02:54.982398+00:00",
+  "updated_at": "2026-02-24T02:55:41.243132+00:00",
   "processed_ids": [
+    "https://chadnauseam.com/coding/pltd/are-dependent-types-actually-erased",
+    "https://chadnauseam.com/coding/pltd/keep-rust-simple",
+    "https://chadnauseam.com/coding/pltd/notes-on-cpp-undefined-behavior",
+    "https://chadnauseam.com/coding/pltd/react-is-good-javascript-is-the-problem",
     "https://chadnauseam.com/coding/random/i-built-an-app-to-talk-to-my-dad",
+    "https://chadnauseam.com/coding/tips/my-obvious-syncing-strategy",
+    "https://chadnauseam.com/coding/tips/rust-and-react",
     "https://chadnauseam.com/coding/tips/start-vibe-coding-fast",
     "https://chadnauseam.com/language/what-I-learned-building-a-language-learning-app"
   ]

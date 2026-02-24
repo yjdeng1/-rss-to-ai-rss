@@ -99,11 +99,77 @@
       <p>自动聚合 RSS，并为每篇内容生成中文要点摘要。</p>
       <div class="toolbar">
         <a href="output.xml">订阅 RSS XML</a>
-        <span>更新时间：2026-02-24 02:21 UTC</span>
-        <span>展示条数：3</span>
+        <span>更新时间：2026-02-24 02:55 UTC</span>
+        <span>展示条数：9</span>
       </div>
     </header>
     <article class="card">
+  <h2><a href="https://chadnauseam.com/coding/pltd/are-dependent-types-actually-erased" target="_blank" rel="noopener noreferrer">are-dependent-types-actually-erased</a></h2>
+  <p class="meta">发布时间：2026-02-24 02:53 UTC</p>
+  <section>
+    <h3>AI 总结</h3>
+    <p>- 依赖类型的核心是三个简单概念的组合：函数可以返回类型、函数输入的值可以决定输出的类型、元组中第一个元素的值可以决定第二个元素的类型。<br>- 依赖类型允许在类型系统中编码值级别的信息，例如创建长度在类型中指定的向量（`Vect n a`），从而在编译时捕获更多错误。<br>- 依赖类型在运行时通常会被擦除，这意味着类型信息不会影响程序的执行性能，它们主要用于编译时的验证。<br>- 文章通过 Idris 的示例（如 `Vect` 类型和 `append` 函数）展示了依赖类型如何增强类型安全性，同时保持运行效率。</p>
+  </section>
+  <section>
+    <h3>原文预览</h3>
+    <p>Dependent Types and How To Get Rid Of Them<br>------------------------------------------<br><br>2025-11-02<br><br>I saw [an argument](https://news.ycombinator.com/item?id=45793434) on Hacker News today, and realized it was an interesting case where both people were right. A real-life case of this image:<br><br>The argument had to do with &quot;Dependent Types&quot;. You may have heard of dependent types as &quot;that thing where you can put values in types&quot;. Dependent types are a feature of programming languages that very few people actually use, but many people are interested in them because they sound incredibly cool. And they</p>
+  </section>
+</article><article class="card">
+  <h2><a href="https://chadnauseam.com/coding/pltd/react-is-good-javascript-is-the-problem" target="_blank" rel="noopener noreferrer">react-is-good-javascript-is-the-problem</a></h2>
+  <p class="meta">发布时间：2026-02-24 02:53 UTC</p>
+  <section>
+    <h3>AI 总结</h3>
+    <p>*   **核心论点：React的许多痛点源于JavaScript的设计缺陷**。文章认为，人们常抱怨的React问题（如不必要的重新渲染、性能优化复杂）并非React本身之过，而是由JavaScript中对象和函数引用比较的工作方式（引用相等性）所导致。<br>*   **具体问题：引用变化触发“记忆化瀑布”**。在React中，每次渲染创建的新函数或数组（即使内容相同）都被视为不同的引用。这迫使开发者为了优化性能，不得不使用 `useCallback` 和 `useMemo` 来维持引用稳定。<br>*   **后果：代码复杂度增加，逻辑被样板代码淹没**。为了解决引用变化问题，开发者陷入“记忆化瀑布”：一个 `useCallback` 依赖一个 `useMemo` 的结果，而该结果又可能依赖另一个 `useMemo`。最终，组件的记忆化样板代码量可能超过实际业务逻辑，使代码变得冗长和难以维护。</p>
+  </section>
+  <section>
+    <h3>原文预览</h3>
+    <p>Everything I Hate About React, I Really Hate About JavaScript<br>-------------------------------------------------------------<br><br>The main thing[[1]](https://publish.obsidian.md/#fn-1-b65edf2a9eed67e5) people hate about React is not React&#x27;s fault at all, but is actually caused by a design flaw in JavaScript. (Or TypeScript, it makes no difference for the purposes of this post.) Let me show you what I mean.<br><br>The Simple Component That Isn&#x27;t<br>-------------------------------<br><br>So you&#x27;re writing a simple storefront:<br><br>```<br>function Store() {<br> const [cart, setCart] = useState([]);<br> <br> return (<br> &lt;&gt;<br> &lt;ProductLi</p>
+  </section>
+</article><article class="card">
+  <h2><a href="https://chadnauseam.com/coding/pltd/keep-rust-simple" target="_blank" rel="noopener noreferrer">keep-rust-simple</a></h2>
+  <p class="meta">发布时间：2026-02-24 02:53 UTC</p>
+  <section>
+    <h3>AI 总结</h3>
+    <p>*   **Rust 通过舍弃某些“便利性”特性来保持语言简洁**。文章列举了Rust没有的10个特性（如命名参数、默认参数、空值、异常、继承等），认为这些并非必需，其缺失反而使语言更简单易学。<br>*   **Rust 的复杂性主要用于换取“能力”而非“便利”**。文章以字符串类型为例，`&amp;str`和`String`的区分看似复杂，但这是为了支持高效地引用字符串片段而做的必要设计权衡，属于“用复杂性换取能力”。<br>*   **Rust 倾向于添加“局部性”语法糖，避免“非局部性”影响**。像`if let`、`?`这样的语法糖，其影响范围仅限于使用它们的函数内部。而像默认参数这类特性，会影响整个库的所有使用者，因此不被采纳。<br>*   **Rust 对添加新特性持审慎态度，以防止语言过度复杂化**。文章以`default_field_values`这个实验性功能为例，虽然它很便利，但作者认为不应加入。因为如果一味添加所有人觉得方便的特性，最终会导致语言像Python一样语法庞杂，增加学习负担。</p>
+  </section>
+  <section>
+    <h3>原文预览</h3>
+    <p>Keep Rust simple!<br>-----------------<br><br>Rust doesn&#x27;t have very many features. Here are 10 features rust does not have:<br><br>1. No named arguments<br>2. No default arguments<br>3. No ternary operator[[1]](https://publish.obsidian.md/#fn-1-31f073d366bec6c7)<br>4. No null<br>5. No exceptions<br>6. No function overloading<br>7. No inheritance<br>8. No constructors (in the C++ sense)<br>9. No variadic functions<br>10. No implicit type conversions.<br><br>It turns out you don&#x27;t really strictly need any of this stuff. Nothing on this list allows you to do anything you couldn&#x27;t do without it. It&#x27;s all mere &quot;convenience features&quot;. And the ab</p>
+  </section>
+</article><article class="card">
+  <h2><a href="https://chadnauseam.com/coding/tips/my-obvious-syncing-strategy" target="_blank" rel="noopener noreferrer">my-obvious-syncing-strategy</a></h2>
+  <p class="meta">发布时间：2026-02-24 02:53 UTC</p>
+  <section>
+    <h3>AI 总结</h3>
+    <p>- **本地优先与云端同步**：应用设计为本地优先，允许用户在无网络环境下（如飞机或地铁）使用，并在恢复网络连接后自动同步数据到云端，确保多设备间数据一致性。<br>  <br>- **事件驱动的架构**：应用采用事件驱动模型，用户操作不直接修改状态，而是生成带时间戳的事件并存入事件向量。状态根据事件向量重新计算，便于在多设备间插入和同步事件。<br>  <br>- **基于时间戳的事件排序**：通过为每个事件添加时间戳，确保所有设备按时间顺序应用事件，解决多设备离线操作后的冲突问题，避免数据丢失。<br>  <br>- **自动实时同步**：当设备在线时，任何操作都会实时同步到其他设备，无需手动触发同步按钮，实现无缝的多设备数据同步体验。</p>
+  </section>
+  <section>
+    <h3>原文预览</h3>
+    <p>I&#x27;m working on a flashcard web app to help teach myself French. Earlier versions of the app just saved all user data to localStorage. That is both annoying and scary. It&#x27;s annoying because localStorage doesn&#x27;t get shared with your other devices (I have two phones and two computers). And it&#x27;s scary because you never know when localStorage will get evicted (I think iOS evicts it after a week of inactivity?).<br><br>So this weekend I decided to build a cloud sync layer for the flashcard app, and it went surprisingly well. Here were my requirements:<br><br>1. Local-first - I should be able to study french whi</p>
+  </section>
+</article><article class="card">
+  <h2><a href="https://chadnauseam.com/coding/tips/rust-and-react" target="_blank" rel="noopener noreferrer">rust-and-react</a></h2>
+  <p class="meta">发布时间：2026-02-24 02:53 UTC</p>
+  <section>
+    <h3>AI 总结</h3>
+    <p>- **技术栈优势**：作者认为 Rust（用于业务逻辑）与 Vite/React（用于UI）的组合非常高效。Rust 能避免低级错误并保证性能，尤其适合复杂逻辑（如向量数据库、AI推理）；React 则拥有成熟的UI组件生态。<br>- **配置关键**：在 Vite 项目中，必须启用 `vite-plugin-wasm` 和 `vite-plugin-top-level-await` 插件以支持 WebAssembly 代码，并在 `package.json` 中正确关联 Rust 包。<br>- **构建与开发**：使用 `wasm-pack build` 构建 Rust 包（生成 `pkg` 文件夹），但需注意 WebAssembly 模块目前不支持热重载，修改 Rust 代码后需手动重启项目。<br>- **类型与工具**：推荐利用 `wasm-bindgen` 自动生成 TypeScript 类型注解，并使用 `tsify` 库简化类型定义生成，减少手动处理 `serde_wasm_bindgen` 的需求。</p>
+  </section>
+  <section>
+    <h3>原文预览</h3>
+    <p>Rust + Vite/React is an insanely slick combination<br>--------------------------------------------------<br><br>I love writing UIs in React, but I hate writing business logic in javascript/typescript. I need Rust&#x27;s lack of footguns to be productive writing any tricky logic, and I like being closer to the metal because I feel more confident that my code will actually run fast. I have a [vector database](https://github.com/not-pizza/victor) and some [AI inference code](https://github.com/wafer-inc/catboost) that I use quite often on the web, and it would be a nightmare to write that stuff in Typescript.</p>
+  </section>
+</article><article class="card">
+  <h2><a href="https://chadnauseam.com/coding/pltd/notes-on-cpp-undefined-behavior" target="_blank" rel="noopener noreferrer">notes-on-cpp-undefined-behavior</a></h2>
+  <p class="meta">发布时间：2026-02-24 02:53 UTC</p>
+  <section>
+    <h3>AI 总结</h3>
+    <p>*   **未定义行为（Undefined Behavior）赋予编译器极大的自由度**：当C++代码中存在未定义行为（例如访问未初始化的变量）时，C++标准对编译器生成的代码“没有任何限制”，编译器理论上可以生成任何代码，包括恶意代码。<br>*   **未定义行为可能导致反直觉和危险的后果**：代码的实际运行结果可能完全不符合程序员的“合理”预期。例如，一个未初始化的布尔变量可能导致程序同时输出“真”和“假”，或者使关键的安全检查被编译器优化掉而失效。<br>*   **未定义行为是真实的安全漏洞来源**：文中以Chromium（谷歌浏览器）的一个历史漏洞为例，说明由于代码中存在未定义行为（对32位整数进行32位移位），导致一个安全检查被编译器优化，从而引入了安全漏洞。这证明了未定义行为的危害是实际存在的。<br>*   **未定义行为难以被完全避免**：即使是经验丰富的开发者（如案例中的五名谷歌C++工程师）也可能在代码审查中遗漏未定义行为。这强调了所有C++程序员都需要对其保持警惕。</p>
+  </section>
+  <section>
+    <h3>原文预览</h3>
+    <p>You write the following C++ code. Put it into a C++ compiler, compile it, and run it. Suddenly, your bank account is drained, your passwords are changed, and your nudes get leaked. What went wrong? And can we use this to disprove Fermat&#x27;s Last Theorem?<br><br>```<br>int main() {<br> int v;<br> if (v == 0) {<br> cout &lt;&lt; &quot;test&quot; &lt;&lt; endl;<br> }<br> return 0;<br>}<br>```<br><br>Wait a second. You didn&#x27;t write any code that drains your bank account. So why would your compiler produce a binary that does that? Well guess what: there are absolutely no rules what the C++ compiler is supposed to do given the code you write.<br><br>Sure, it may b</p>
+  </section>
+</article><article class="card">
   <h2><a href="https://chadnauseam.com/coding/tips/start-vibe-coding-fast" target="_blank" rel="noopener noreferrer">start-vibe-coding-fast</a></h2>
   <p class="meta">发布时间：2026-02-24 02:02 UTC</p>
   <section>
