@@ -141,6 +141,7 @@ python main.py
 - `history.json` 去重：只处理从未处理过的新文章。
 - 正文清洗+截断：默认最多 3000 字符。
 - 当 RSS 正文为空时，自动尝试抓取原网页正文后再总结（失败时才回退为空提示）。
+- 对前端渲染站点（静态 HTML 无正文）可启用 `r.jina.ai` 二级回填，提高可读文本获取成功率。
 - 每次最多处理 `MAX_NEW_ITEMS_PER_RUN`（默认 20）条新文章。
 - API 失败时不中断全流程，单篇文章会写入失败提示并继续处理其他文章。
 
@@ -161,6 +162,8 @@ python main.py
 - `RSS_TIMEOUT`：默认 `20`
 - `ENABLE_WEB_FALLBACK`：默认 `1`（RSS 无正文时抓原网页）
 - `WEB_FETCH_TIMEOUT`：默认 `20`
+- `ENABLE_JINA_FALLBACK`：默认 `1`（网页正文过短时走 `r.jina.ai` 二级回填）
+- `JINA_TIMEOUT`：默认 `25`
 - `API_TIMEOUT`：默认 `60`
 
 ## 10. 首次运行建议

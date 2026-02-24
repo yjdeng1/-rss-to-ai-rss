@@ -319,7 +319,43 @@ def fetch_article_webpage_text(url: str, timeout: int, max_content_chars: int) -
         if meta_desc:
             best_text = normalize_plain_text(meta_desc)
 
+    if len(best_text) < 200 and os.getenv("ENABLE_JINA_FALLBACK", "1").lower() in {"1", "true", "yes"}:
+        try:
+            reader_text = fetch_text_via_jina_reader(
+                original_url=url,
+                timeout=get_env_int("JINA_TIMEOUT", 25),
+                max_content_chars=max_content_chars,
+            )
+            if len(reader_text) > len(best_text):
+                best_text = reader_text
+                logging.info("已启用 Jina Reader 回填正文：%s", url)
+        except requests.RequestException as exc:
+            logging.warning("Jina Reader 抓取失败，链接：%s，原因：%s", url, exc)
+        except Exception as exc:  # noqa: BLE001
+            logging.warning("Jina Reader 解析失败，链接：%s，原因：%s", url, exc)
+
     return best_text[:max_content_chars].strip()
+
+
+def fetch_text_via_jina_reader(original_url: str, timeout: int, max_content_chars: int) -> str:
+    """通过 r.jina.ai 抽取可读文本，适配前端渲染页面。"""
+    clean_url = original_url.strip()
+    if clean_url.startswith("https://"):
+        reader_url = "https://r.jina.ai/http://" + clean_url[len("https://") :]
+    elif clean_url.startswith("http://"):
+        reader_url = "https://r.jina.ai/http://" + clean_url[len("http://") :]
+    else:
+        reader_url = "https://r.jina.ai/http://" + clean_url
+
+    response = requests.get(reader_url, headers={"User-Agent": USER_AGENT}, timeout=timeout)
+    response.raise_for_status()
+
+    raw_text = response.text or ""
+    marker = "Markdown Content:"
+    if marker in raw_text:
+        raw_text = raw_text.split(marker, 1)[1]
+
+    return normalize_plain_text(raw_text)[:max_content_chars].strip()
 
 
 def fetch_feed_entries(feed_url: str, timeout: int) -> list[dict[str, Any]]:
