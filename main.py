@@ -233,12 +233,93 @@ def html_to_plain_text(html: str) -> str:
     text = soup.get_text(separator="\n")
     text = unescape(text)
 
-    # 规整换行和空白。
-    text = text.replace("\r", "\n")
-    text = re.sub(r"\n{3,}", "\n\n", text)
-    text = re.sub(r"[ \t\f\v]+", " ", text)
+    return normalize_plain_text(text)
 
-    return text.strip()
+
+def normalize_plain_text(text: str) -> str:
+    """规整文本中的换行和空白。"""
+    if not text:
+        return ""
+
+    normalized = unescape(text)
+    normalized = normalized.replace("\r", "\n")
+    normalized = re.sub(r"\n{3,}", "\n\n", normalized)
+    normalized = re.sub(r"[ \t\f\v]+", " ", normalized)
+    return normalized.strip()
+
+
+def fetch_article_webpage_text(url: str, timeout: int, max_content_chars: int) -> str:
+    """当 RSS 无正文时，抓取原网页并提取正文文本。"""
+    if not url:
+        return ""
+
+    headers = {
+        "User-Agent": USER_AGENT,
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+    }
+
+    response = requests.get(url, headers=headers, timeout=timeout)
+    response.raise_for_status()
+
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    # 去除常见噪声节点，保留正文。
+    for tag in soup(
+        [
+            "script",
+            "style",
+            "noscript",
+            "svg",
+            "img",
+            "video",
+            "audio",
+            "iframe",
+            "source",
+            "picture",
+            "header",
+            "footer",
+            "nav",
+            "aside",
+            "form",
+            "button",
+        ]
+    ):
+        tag.decompose()
+
+    candidates = [
+        soup.find("article"),
+        soup.find("main"),
+        soup.find(attrs={"role": "main"}),
+        soup.body,
+    ]
+
+    best_text = ""
+    for node in candidates:
+        if node is None:
+            continue
+        text = normalize_plain_text(node.get_text(separator="\n"))
+        if len(text) > len(best_text):
+            best_text = text
+        if len(best_text) >= max_content_chars:
+            break
+
+    if len(best_text) < 80:
+        # 对某些站点，正文是脚本渲染；退化使用元描述，避免空内容。
+        meta_desc = ""
+        for selector in (
+            {"name": "description"},
+            {"property": "og:description"},
+            {"name": "twitter:description"},
+        ):
+            tag = soup.find("meta", attrs=selector)
+            content = (tag.get("content") if tag else "") or ""
+            if content.strip():
+                meta_desc = content.strip()
+                break
+        if meta_desc:
+            best_text = normalize_plain_text(meta_desc)
+
+    return best_text[:max_content_chars].strip()
 
 
 def fetch_feed_entries(feed_url: str, timeout: int) -> list[dict[str, Any]]:
@@ -294,10 +375,6 @@ def collect_new_articles(
             raw_html = extract_html_from_entry(entry)
             plain_text = html_to_plain_text(raw_html)
             plain_text = plain_text[:max_content_chars].strip()
-
-            if not plain_text:
-                # 某些源只给标题和链接，避免空内容造成模型浪费。
-                plain_text = f"标题：{title}\n链接：{link}\n正文为空。"
 
             new_articles.append(
                 Article(
@@ -674,6 +751,8 @@ def main() -> None:
     max_output_items = get_env_int("MAX_OUTPUT_ITEMS", 300)
     preview_chars = get_env_int("ORIGINAL_PREVIEW_CHARS", 600)
     rss_timeout = get_env_int("RSS_TIMEOUT", 20)
+    web_fetch_timeout = get_env_int("WEB_FETCH_TIMEOUT", 20)
+    enable_web_fallback = os.getenv("ENABLE_WEB_FALLBACK", "1").lower() in {"1", "true", "yes"}
     model_name = os.getenv("MODEL_NAME", "deepseek-chat")
 
     feed_urls = load_feed_urls(opml_path=opml_path, feeds_file=feeds_file)
@@ -705,6 +784,27 @@ def main() -> None:
 
     for idx, article in enumerate(new_articles, start=1):
         logging.info("[%d/%d] 正在总结：%s", idx, len(new_articles), article.title)
+
+        if not article.plain_text and enable_web_fallback and article.link:
+            try:
+                article.plain_text = fetch_article_webpage_text(
+                    url=article.link,
+                    timeout=web_fetch_timeout,
+                    max_content_chars=max_content_chars,
+                )
+                if article.plain_text:
+                    logging.info("RSS 正文为空，已回填原网页正文：%s", article.link)
+            except requests.RequestException as exc:
+                logging.warning("抓取原网页失败，链接：%s，原因：%s", article.link, exc)
+            except Exception as exc:  # noqa: BLE001
+                logging.warning("解析原网页正文失败，链接：%s，原因：%s", article.link, exc)
+
+        if not article.plain_text:
+            article.plain_text = (
+                f"标题：{article.title}\n"
+                f"链接：{article.link}\n"
+                "正文为空。"
+            )
 
         summary_text = summarize_article(
             client=client,

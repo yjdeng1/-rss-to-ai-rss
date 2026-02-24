@@ -31,6 +31,8 @@ jobs:
       OUTPUT_FEED_PUBLIC_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/output.xml
       OUTPUT_PAGE_TITLE: AI RSS 每日简报
       OUTPUT_PAGE_SUBTITLE: 支持电脑和手机直接访问，内容由 GitHub Actions 自动更新。
+      ENABLE_WEB_FALLBACK: "1"
+      WEB_FETCH_TIMEOUT: "20"
       TZ: Asia/Shanghai
 
     steps:
