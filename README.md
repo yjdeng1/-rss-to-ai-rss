@@ -1,17 +1,17 @@
 # RSS-to-AI-RSS（GitHub Actions 零服务器版）
 
-这是一个全自动项目：
+这是一个默认仅支持手动运行的项目：
 - 读取你提供的 RSS 源（优先从 OPML 读取）。
 - 抓取新文章，调用大模型生成中文要点总结。
 - 生成新的 `output.xml`（可直接订阅）。
 - 生成 `index.html` 网页，可在手机/电脑直接浏览 AI 摘要。
-- 通过 GitHub Actions 每天自动跑 2 次并自动提交结果。
+- 可通过 GitHub Actions 手动运行并自动提交结果。
 
 ## 1. 项目文件说明
 
 - `main.py`：核心逻辑（抓取、去重、摘要、生成 RSS、写入历史）
 - `requirements.txt`：Python 依赖
-- `.github/workflows/rss_generator.yml`：定时自动运行工作流
+- `.github/workflows/rss_generator.yml`：手动运行工作流（已暂停定时触发）
 - `feeds.txt`：OPML 不可用时的备用 RSS 列表
 - `history.json`：文章处理历史（首次运行会自动创建）
 - `output.xml`：最终可订阅的 AI RSS（首次运行会自动创建）
@@ -59,13 +59,11 @@ env:
   OPML_PATH: feedbro-subscriptions-20260222-172113.opml
 ```
 
-## 5. 工作流定时说明（北京时间）
+## 5. 工作流状态说明（北京时间）
 
-工作流配置为每天 2 次：
-- 北京时间 08:00
-- 北京时间 18:00
+当前仓库已经暂停 GitHub Actions 的定时触发，只保留手动运行（`workflow_dispatch`）。
 
-GitHub Actions 使用 UTC，对应 cron：
+如果后续需要恢复每天 2 次自动运行，可在 `.github/workflows/rss_generator.yml` 中重新加入：
 
 ```yaml
 - cron: "0 0,10 * * *"

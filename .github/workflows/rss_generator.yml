@@ -1,11 +1,6 @@
 name: RSS to AI RSS
 
 on:
-  schedule:
-    # GitHub Actions 使用 UTC：
-    # 北京时间 08:00 = UTC 00:00
-    # 北京时间 18:00 = UTC 10:00
-    - cron: "0 0,10 * * *"
   workflow_dispatch:
 
 permissions:
